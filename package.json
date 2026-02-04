@@ -9,6 +9,9 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@commercetools/platform-sdk": "^8.23.0",
+    "@commercetools/sdk-client-v2": "^3.3.0",
+    "contentful": "^11.10.3",
     "next": "16.1.6",
     "react": "19.2.3",
     "react-dom": "19.2.3"

@@ -1,6 +1,13 @@
 @import "tailwindcss";
 
 :root {
+  --bt-purple: #5514B4;
+  --bt-purple-dark: #3D0D87;
+  --bt-purple-light: #7B4CC4;
+  --bt-magenta: #FF80FF;
+  --bt-yellow: #E6FF00;
+  --bt-gray: #6B6B6B;
+  --bt-gray-light: #F5F5F5;
   --background: #ffffff;
   --foreground: #171717;
 }
@@ -8,19 +15,163 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bt-purple: var(--bt-purple);
+  --color-bt-purple-dark: var(--bt-purple-dark);
+  --color-bt-purple-light: var(--bt-purple-light);
+  --color-bt-magenta: var(--bt-magenta);
+  --color-bt-yellow: var(--bt-yellow);
+  --color-bt-gray: var(--bt-gray);
+  --color-bt-gray-light: var(--bt-gray-light);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'BT Curve', Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Custom scrollbar for carousel */
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Smooth scroll behavior */
+.scroll-smooth {
+  scroll-behavior: smooth;
+}
+
+/* Gradient text effect */
+.gradient-text {
+  background: linear-gradient(135deg, var(--bt-purple) 0%, var(--bt-magenta) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Card hover effects */
+.card-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card-hover:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(85, 20, 180, 0.15);
+}
+
+/* Button effects */
+.btn-primary {
+  background-color: var(--bt-purple);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+.btn-primary:hover {
+  background-color: var(--bt-purple-dark);
+  transform: scale(1.02);
+}
+
+.btn-secondary {
+  background-color: white;
+  color: var(--bt-purple);
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: 2px solid var(--bt-purple);
+  cursor: pointer;
+}
+.btn-secondary:hover {
+  background-color: var(--bt-purple);
+  color: white;
+}
+
+.btn-outline-white {
+  background-color: transparent;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: 2px solid white;
+  cursor: pointer;
+}
+.btn-outline-white:hover {
+  background-color: white;
+  color: var(--bt-purple);
+}
+
+/* Fade in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease forwards;
+}
+
+/* Slide in from left */
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-left {
+  animation: slideInLeft 0.6s ease forwards;
+}
+
+/* Pulse animation for CTA */
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(85, 20, 180, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 15px rgba(85, 20, 180, 0);
+  }
+}
+
+.animate-pulse-shadow {
+  animation: pulse 2s infinite;
+}
+
+/* Glow effect */
+.glow-effect {
+  box-shadow: 0 0 30px rgba(255, 128, 255, 0.3),
+              0 0 60px rgba(85, 20, 180, 0.2);
+}
+
+/* Image hover zoom */
+.img-zoom {
+  overflow: hidden;
+}
+.img-zoom img {
+  transition: transform 0.5s ease;
+}
+.img-zoom:hover img {
+  transform: scale(1.05);
 }
