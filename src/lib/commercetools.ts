@@ -8,21 +8,27 @@ import {
   type ApiRoot,
 } from '@commercetools/platform-sdk';
 
-const projectKey = process.env.CTP_PROJECT_KEY || 'demo_btcc';
+// Environment variables required for commercetools
+const projectKey = process.env.CTP_PROJECT_KEY || '';
+const clientId = process.env.CTP_CLIENT_ID || '';
+const clientSecret = process.env.CTP_CLIENT_SECRET || '';
+const authUrl = process.env.CTP_AUTH_URL || 'https://auth.europe-west1.gcp.commercetools.com';
+const apiUrl = process.env.CTP_API_URL || 'https://api.europe-west1.gcp.commercetools.com';
+const scopes = process.env.CTP_SCOPES || `manage_project:${projectKey}`;
 
 const authMiddlewareOptions: AuthMiddlewareOptions = {
-  host: process.env.CTP_AUTH_URL || 'https://auth.europe-west1.gcp.commercetools.com',
+  host: authUrl,
   projectKey,
   credentials: {
-    clientId: process.env.CTP_CLIENT_ID || 'CCzRVFo0hfTApX5iTV7xfoji',
-    clientSecret: process.env.CTP_CLIENT_SECRET || 'pCkUIiZki3E_Jxj-ZldzvFrJtKtRqlmV',
+    clientId,
+    clientSecret,
   },
-  scopes: [process.env.CTP_SCOPES || 'manage_project:demo_btcc'],
+  scopes: [scopes],
   fetch,
 };
 
 const httpMiddlewareOptions: HttpMiddlewareOptions = {
-  host: process.env.CTP_API_URL || 'https://api.europe-west1.gcp.commercetools.com',
+  host: apiUrl,
   fetch,
 };
 

@@ -1,19 +1,29 @@
 import { createClient, Entry, EntrySkeletonType } from 'contentful';
 
-// Contentful client configuration
-const client = createClient({
-  space: process.env.CONTENTFUL_SPACE_ID || '3fqcz7kiptf2',
-  accessToken: process.env.CONTENTFUL_ACCESS_TOKEN || 'Dn09tpIwwiD3O8lz4vE48c3MbNQboH-D_iN9pG54OwE',
-});
+// Contentful client configuration - requires environment variables
+const spaceId = process.env.CONTENTFUL_SPACE_ID;
+const accessToken = process.env.CONTENTFUL_ACCESS_TOKEN;
+const previewToken = process.env.CONTENTFUL_PREVIEW_TOKEN;
 
-const previewClient = createClient({
-  space: process.env.CONTENTFUL_SPACE_ID || '3fqcz7kiptf2',
-  accessToken: process.env.CONTENTFUL_PREVIEW_TOKEN || 'n05_bmgeKScyGdvQoPDt3w9hRVJYqqKtEBdgyoPYrWY',
+// Create clients only if credentials are available
+const client = spaceId && accessToken ? createClient({
+  space: spaceId,
+  accessToken: accessToken,
+}) : null;
+
+const previewClient = spaceId && previewToken ? createClient({
+  space: spaceId,
+  accessToken: previewToken,
   host: 'preview.contentful.com',
-});
+}) : null;
 
 export function getClient(preview = false) {
-  return preview ? previewClient : client;
+  const selectedClient = preview ? previewClient : client;
+  if (!selectedClient) {
+    console.warn('Contentful client not configured. Using default content.');
+    return null;
+  }
+  return selectedClient;
 }
 
 // Content Type Interfaces
@@ -169,6 +179,9 @@ function extractTextFromRichText(richText: unknown): string {
 export async function getHomepageContent(preview = false): Promise<HomepageContent> {
   try {
     const contentfulClient = getClient(preview);
+    if (!contentfulClient) {
+      return defaultHomepageContent;
+    }
     // Fetch individual section types
     return await fetchSectionContent(contentfulClient);
   } catch (error) {
