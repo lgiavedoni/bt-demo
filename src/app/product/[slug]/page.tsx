@@ -38,6 +38,12 @@ function formatPrice(price: { centAmount: number; currencyCode: string }): strin
   }).format(amount);
 }
 
+// Strip HTML tags from description
+function stripHtml(html: string | undefined): string {
+  if (!html) return '';
+  return html.replace(/<[^>]*>/g, '').trim();
+}
+
 export default function ProductPage() {
   const params = useParams();
   const slug = params.slug as string;
@@ -256,7 +262,7 @@ export default function ProductPage() {
 
             <h1 className="text-3xl font-bold text-gray-900 mb-4">{name}</h1>
 
-            <p className="text-gray-600 mb-8">{description}</p>
+            <p className="text-gray-600 mb-8">{stripHtml(description)}</p>
 
             {/* Action Links */}
             <div className="border rounded-xl divide-y mb-8">

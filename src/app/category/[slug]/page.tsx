@@ -17,6 +17,12 @@ interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
+// Strip HTML tags from description
+function stripHtml(html: string | undefined): string {
+  if (!html) return '';
+  return html.replace(/<[^>]*>/g, '').trim();
+}
+
 function ProductCard({ product }: { product: ProductProjection }) {
   const name = getLocalizedValue(product.name);
   const description = getLocalizedValue(product.description);
@@ -60,7 +66,7 @@ function ProductCard({ product }: { product: ProductProjection }) {
           {name}
         </h3>
         <p className="text-gray-600 text-sm mb-4 line-clamp-2">
-          {description}
+          {stripHtml(description)}
         </p>
         {price && (
           <p className="text-lg font-semibold text-gray-900">
